@@ -27,7 +27,7 @@ const BlogForm = ({
         }
                 
 
-        /* eikö tarvita
+        /* eikö tarvita näitä
         const handleBlogInputTitle = event => {                
                 setTitle(event.target.value)
         }
