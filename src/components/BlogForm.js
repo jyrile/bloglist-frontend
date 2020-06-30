@@ -1,109 +1,64 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
-const BlogForm = ({
-        addBlog,
-        handleBlogInputAuthor,
-        handleBlogInputTitle,
-        handleBlogInputUrl,
-        title,
-        author,
-        url,
-        user
-}) => {
-        const [newBlogEntry, setNewBlogEntry] = useState('')
+const BlogForm = ({ createBlog }) => {
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
-        const handleChange = event => {
-                setNewBlogEntry(event.target.value)
-        }
+  const blogBlockStyle = {
+    border: 'solid',
+    borderColor: 'gray',
+    padding: 5,
+    marginBottom: 10,
+    maxWidth: 400
+  }
 
-        const addBlog = event => {
-                event.preventDefault();        
-               
-                createBlog({
-                        content: newBlogEntry
-                })
+  const handleBlogInputTitle = event => {
+    setTitle(event.target.value)
+  }
+  const handleBlogInputAuthor = event => {
+    setAuthor(event.target.value)
+  }
+  const handleBlogInputUrl = event => {
+    setUrl(event.target.value)
+  }
 
-                setNewBlogEntry('')
-        }
-                
-
-        /* eikö tarvita näitä
-        const handleBlogInputTitle = event => {                
-                setTitle(event.target.value)
-        }
-        const handleBlogInputAuthor = event => {                
-                setAuthor(event.target.value)
-        }
-        const handleBlogInputUrl = event => {                
-                setUrl(event.target.value)
-        }
-        const addBlog = event => {
-                event.preventDefault();        
-               
-                const newBlog = {
-                        title: title,                        
-                        author: author,
-                        url: url
-                };
-
-                blogService
-                .create(newBlog)
-                .then(returnedBlog => {                        
-                        setBlogs(blogs.concat(returnedBlog))                                              
-                        setErrorType('info')
-                        setErrorMessage(`New blog entry ${newBlog.title} added`)
-                        setTimeout(() => {
-                                setErrorMessage(null)
-                        }, 5000)
-                        setTitle('')
-                        setAuthor('')
-                        setUrl('')                        
-                })
-
-                .catch((error)=>{                        
-                        setErrorType('error');
-                        setErrorMessage(`Error adding new blog entry. ${error}`)
-                        console.log(error)
-                        setTimeout(() => {
-                                setErrorMessage(null)
-                        }, 5000)
-                })
-
-        }
-        */
-
-        if(!user){return ""}
+  const addBlog = event => {
+    event.preventDefault()
+    createBlog({
+      title,
+      author,
+      url,
+    })
+    setTitle('')
+    setAuthor('')
+    setUrl('')
+  }
 
   return (
-  <div>
-        <h2>Create a new blog entry</h2>
-        <form onSubmit={addBlog}>
-          <div>
-                  title:
-                  <input 
-                  type="text"
-                  value={title}
-                  onChange={handleBlogInputTitle}                                
-                  />
-                  <br />
-                  author:
-                  <input
-                  type="text"
-                  value={author}
-                  onChange={handleBlogInputAuthor}                                
-                  />
-                  <br />
-                  url:
-                  <input 
-                  type="text"
-                  value={url} 
-                  onChange={handleBlogInputUrl}                                
-                  />
-          </div>
-          <button type="submit">add blog</button>                        
-  </form>               
-  </div>
+    <div style={blogBlockStyle}>
+      <h2>Create a new blog entry</h2>
+      <form onSubmit={addBlog}>
+        <div>
+          title:
+          <input type="text" value={title} onChange={handleBlogInputTitle} id="title" />
+          <br />
+          author:
+          <input type="text" value={author} onChange={handleBlogInputAuthor} id="author" />
+          <br />
+          url:
+          <input type="text" value={url} onChange={handleBlogInputUrl} id="url" />
+        </div>
+        <button type="submit" id="add-button" >add blog</button>
+      </form>
+    </div>
   )
 }
 
-export default BlogForm;
+BlogForm.propTypes = {
+  handleBlogInputAuthor: PropTypes.func.isRequired,
+  handleBlogInputTitle: PropTypes.func.isRequired,
+}
+
+export default BlogForm
